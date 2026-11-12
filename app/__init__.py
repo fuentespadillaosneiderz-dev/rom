@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask_cors import CORS
 from app.common.config import Config
 from app.models import db
@@ -21,9 +21,9 @@ def create_app():
     app.register_blueprint(error_bp)
     app.register_blueprint(producto_bp)
     
-    # Ruta raíz usando add_url_rule (ideal para Factory Pattern)
+    # Redirige la página principal directo a la tabla de productos
     def index():
-        return "¡Bienvenido a mi API de Inventario con Flask y Aiven!"
+        return redirect('/products')
         
     app.add_url_rule('/', 'index', index)
     
