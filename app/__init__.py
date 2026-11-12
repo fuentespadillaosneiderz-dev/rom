@@ -30,4 +30,17 @@ def create_app():
     with app.app_context():
         db.create_all()
         
+        # Insertar productos de prueba automáticamente si la tabla está vacía
+        if Producto.query.count() == 0:
+            p1 = Producto(nombre="Teclado Mecánico", descripcion="Teclado RGB switch blue", precio=120000.0, stock=5)
+            p2 = Producto(nombre="Mouse Gamer", descripcion="Mouse óptico 7200 DPI", precio=65000.0, stock=10)
+            p3 = Producto(nombre="Laptop Gamer", descripcion="Laptop 16GB RAM RTX 4060", precio=3500000.0, stock=3)
+            p4 = Producto(nombre="Audífonos Bluetooth", descripcion="Audífonos inalámbricos con cancelación de ruido", precio=180000.0, stock=7)
+            
+            db.session.add(p1)
+            db.session.add(p2)
+            db.session.add(p3)
+            db.session.add(p4)
+            db.session.commit()
+            
     return app
