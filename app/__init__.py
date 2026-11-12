@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_cors import CORS
 from app.common.config import Config
 from app.models import db
@@ -21,10 +21,11 @@ def create_app():
     app.register_blueprint(error_bp)
     app.register_blueprint(producto_bp)
     
-    # Ruta raíz agregada para evitar el error 404 en Render
-    @app.route('/')
+    # Ruta raíz usando add_url_rule (ideal para Factory Pattern)
     def index():
         return "¡Bienvenido a mi API de Inventario con Flask y Aiven!"
+        
+    app.add_url_rule('/', 'index', index)
     
     with app.app_context():
         db.create_all()
